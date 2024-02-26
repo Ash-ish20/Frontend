@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    function populateDiv(){
+    //    using global doucument varible
+       const element=document.getElementById("finalSum")
+       const a=document.getElementById('firstNum').value
+       const b=document.getElementById('secondNum').value
+
+    // //    fetching backend api and get the output to the page
+
+       fetch('https://sum-server.100xdevs.com/sum?a=' + a + '&b= '+ b)
+       .then((response)=>{
+        console.log(response);
+        response.text()
+        .then((data)=>{
+            element.innerHTML = data;
+        })
+       })
+    }
+
+    // This is the most cleaner way to do it  using async await 
+    async function populateDiv2(){
+        const a=document.getElementById('firstNum').value
+        const b=document.getElementById('secondNum').value
+        
+        const response=await fetch('https://sum-server.100xdevs.com/sum?a=' + a + '&b= '+ b)
+        const ans= await response.text()
+        document.getElementById("finalSum").innerHTML=ans;
+
+    }
+</script>
+<body>
+    <input type="text" id="firstNum" placeholder="First number"></input><br><br>
+    <input type="text" id="secondNum" placeholder="First number"></input><br><br>
+    <button onclick="populateDiv()">Calculate sum</button><br><br>
+    <div id="finalSum"></div>
+</body>
+</html>
